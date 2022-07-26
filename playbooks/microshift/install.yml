@@ -4,4 +4,4 @@
   become: true
 
   roles:
-    - role: pumphouse_p.containers.microshift
+    - role: microshift
