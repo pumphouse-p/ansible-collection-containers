@@ -1,0 +1,12 @@
+---
+- name: Check for supported operating system
+  ansible.builtin.assert:
+    that:
+      - ansible_distribution == 'Fedora' or
+        ansible_distribution == 'CentOS' or
+        ansible_distribution == 'RedHat'
+
+- name: Include operating system specific tasks
+  ansible.builtin.include_tasks:
+    file: "{{ ansible_distribution }}.yml"
+    

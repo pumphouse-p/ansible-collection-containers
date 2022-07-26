@@ -1,0 +1,10 @@
+---
+microshift_data_dir: '~/.microshift/data'
+microshift_audit_log_dir: '/tmp/microshift/logs'
+microshift_log_level: 0
+microshift_cluster_cidr: '10.42.0.0/16'
+microshift_service_cidr: '10.43.0.0/16'
+microshift_cluster_dns: '10.43.0.10'
+microshift_cluster_domain: 'cluster.local'
+microshift_manifests:
+  - /etc/microshift-apps/manifests

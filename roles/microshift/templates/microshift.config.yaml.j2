@@ -1,0 +1,10 @@
+---
+dataDir: "{{ microshift_data_dir }}"
+auditLogDir: "{{ microshift_audit_log_dir }}"
+logVLevel: "{{ microshift_log_level }}"
+cluster:
+  clusterCIDR: "{{ microshift_cluster_cidr }}"
+  serviceCIDR: "{{ microshift_service_cidr }}"
+  dns: "{{ microshift_cluster_dns }}"
+  domain: "{{ microshift_cluster_domain }}"
+manifests: "{{ microshift_manifests }}"
