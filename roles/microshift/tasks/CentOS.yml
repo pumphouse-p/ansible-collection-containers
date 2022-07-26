@@ -1,7 +1,7 @@
 ---
 - name: '[CENTOS] Enable CRI-O module'
   ansible.builtin.dnf:
-    name: 'cri-o:1.21'
+    name: '@cri-o:1.21'
     state: present
     update_cache: true
 
