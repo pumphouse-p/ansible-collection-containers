@@ -1,14 +1,8 @@
 ---
-- name: '[CENTOS] Enable CRI-O module'
+- name: '[CENTOS] Install container tools'
   ansible.builtin.dnf:
-    name: 'cri-o:1.2.1'
+    name: '@container-tools'
     state: present
-
-- name: '[CENTOS] Install CRI-O'
-  ansible.builtin.dnf:
-    name:
-      - cri-o
-      - cri-tools
 
 - name: '[CENTOS] Enable CRI-O at boot'
   ansible.builtin.systemd:
