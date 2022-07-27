@@ -1,9 +1,13 @@
 ---
+- name: '[CENTOS] Enable EPEL Repo'
+  ansible.builtin.dnf:
+    name: epel-release
+    state: present
+
 - name: '[CENTOS] Enable CRI-O module'
   ansible.builtin.dnf:
     name: '@cri-o:1.21'
     state: present
-    update_cache: true
 
 - name: '[CENTOS] Install CRI-O'
   ansible.builtin.dnf:
