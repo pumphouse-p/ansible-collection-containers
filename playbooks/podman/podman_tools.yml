@@ -1,0 +1,7 @@
+---
+- name: Ensure Podman is present and configured
+  hosts: all
+  become: true
+
+  roles:
+    - role: podman_tools

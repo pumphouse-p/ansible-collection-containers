@@ -1,0 +1,4 @@
+__podman_tools_packages:
+  - 'podman'
+  - 'skopeo'
+  - 'buildah'

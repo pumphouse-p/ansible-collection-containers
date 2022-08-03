@@ -1,0 +1,31 @@
+---
+- name: Check for supported operating system
+  ansible.builtin.assert:
+    that:
+      - ansible_os_family in __podman_tools_supported_oses
+    fail_msg: "Unsupported operating system detected. This role only supports {{ __podman_tools_supported_oses }}."
+    success_msg: "Supported operating system detected."
+
+- name: Load operating system specific variables
+  ansible.builtin.include_vars:
+    file: "{{ ansible_distribution | lower }}.yml"
+
+- name: Install podman tools
+  ansible.builtin.package:
+    name: "{{ __podman_tools_packages }}"
+    state: present
+
+- name: Ensure Podman socket is enabled
+  ansible.builtin.service:
+    name: podman.socket
+    state: started
+    enabled: true
+
+- name: Write out registries.conf
+  ansible.builtin.template:
+    src: registries.conf.j2
+    dest: /etc/containers/registries.conf
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart podman

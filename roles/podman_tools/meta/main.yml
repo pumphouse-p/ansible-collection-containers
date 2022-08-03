@@ -1,0 +1,30 @@
+galaxy_info:
+  author: Devin Parrish
+  description: Installs and configures Podman
+  company: Red Hat
+
+  license: GPL-2.0-or-later
+
+  min_ansible_version: 2.9
+
+  platforms:
+    - name: EL
+      versions:
+        - 8
+        - 9
+    - name: Fedora
+      versions:
+        - 35
+        - 36
+    - name: Debian
+      versions:
+        - 9
+        - 10
+        - 11
+
+  galaxy_tags:
+    - system
+    - linux
+    - containers
+
+dependencies: []

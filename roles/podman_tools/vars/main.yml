@@ -1,0 +1,4 @@
+---
+__podman_tools_supported_oses:
+  - 'Debian'
+  - 'RedHat'

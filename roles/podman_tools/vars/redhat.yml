@@ -1,0 +1,2 @@
+__podman_tools_packages:
+  - '@container-management'

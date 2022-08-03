@@ -1,0 +1,6 @@
+---
+podman_tools_unqualified_search_registries:
+  - "registry.fedoraproject.org"
+  - "registry.access.redhat.com"
+  - "docker.io"
+  - "quay.io"
