@@ -18,8 +18,7 @@
 # of these registries, it should be added at the end of the list.
 #
 # # An array of host[:port] registries to try when pulling an unqualified image, in order.
-{% set registries = ', '.join(podman_tools_unqualified_search_registries) %}
-unqualified-search-registries = [{{ registries }}]
+unqualified-search-registries = {{ '\"' + podman_tools_unqualified_search_registries | join('\", \"') + '\"' }}
 #
 # [[registry]]
 # # The "prefix" field is used to choose the relevant [[registry]] TOML table;
