@@ -29,3 +29,7 @@
     group: root
     mode: 0644
   notify: restart podman
+
+- name: Enable lingering for {{ ansible_user }}
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ ansible_user }}"
