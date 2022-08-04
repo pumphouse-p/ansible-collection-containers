@@ -66,7 +66,7 @@
 
 - name: Clean up unit files when removing a container
   ansible.builtin.file:
-    path: "{{ __ctr.systemd.path | default('/home/' + ansible_user + '/.config/systemd/user/container-' + __ctr.name) }}"
+    path: "{{ __ctr.systemd.path | default('/home/' + ansible_user + '/.config/systemd/user/container-' + __ctr.name + '.service') }}"
     state: absent
   loop: "{{ podman_containers }}"
   loop_control:
