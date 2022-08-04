@@ -1,0 +1,65 @@
+---
+- name: Ensure containers at desired state and configuration
+  containers.podman.podman_container:
+    name: "{{ __ctr.name }}"
+    image: "{{ __ctr.image }}"
+    state: "{{ __ctr.state | default('created') }}"
+    volumes: "{{ __ctr.volumes | default(omit) }}"
+    network: "{{ __ctr.networks | default(omit) }}"
+    publish: "{{ __ctr.publish | default(omit) }}"
+    publish_all: "{{ __ctr.publish_all | default(false) }}"
+    env: "{{ __ctr.env | default(omit) }}"
+    env_host: "{{ __ctr.env_host | default(omit) }}"
+    rm: "{{ __ctr.rm | default(false) }}"
+    recreate: "{{ __ctr.recreate | default(false) }}"
+    label: "{{ __ctr.labels | default(omit) }}"
+    annotation: "{{ __ctr.annotations | default(omit) }}"
+    command: "{{ __ctr.cmd | default(omit) }}"
+    cmd_args: "{{ __ctr.cmd_args | default(omit) }}"
+    debug: "{{ __ctr.debug | default(false) }}"
+    detach: "{{ __ctr.detach | default(true) }}"
+    interactive: "{{ __ctr.interactive | default(false) }}"
+    dns: "{{ __ctr.dns | default(omit) }}"
+    dns_search: "{{ __ctr.dns_search | default(omit) }}"
+    entrypoint: "{{ __ctr.entrypoint | default(omit) }}"
+    etc_hosts: "{{ __ctr.etc_hosts | default(omit) }}"
+    force_restart: "{{ __ctr.force_restart | default(false) }}"
+    hostname: "{{ __ctr.hostname | default(omit) }}"
+    generate_systemd:
+      container_prefix: "{{ __ctr.systemd.container_prefix | default('container') }}"
+      names: "{{ __ctr.systemd.names | default(true) }}"
+      new: "{{ __ctr.systemd.new | default(false) }}"
+      path: "{{ __ctr.systemd.path | default('/home/' + ansible_user + '/.config/systemd/user') }}"
+      restart_policy: "{{ __ctr.systemd.restart_policy | default('on-failure') }}"
+    privileged: "{{ __ctr.privileged | default(false) }}"
+  loop: "{{ podman_containers }}"
+  loop_control:
+    loop_var: "__ctr"
+  async: 1000
+  poll: 0
+  register: __podman_containers_job_async
+  changed_when: not __podman_containers_job_async.changed
+
+- name: Wait for containers to be at desired state and configuration
+  ansible.builtin.async_status:
+    jid: "{{ __podman_containers_job_async_result_item.ansible_job_id }}"
+  register: __podman_containers_job_async_result
+  until: __podman_containers_job_async_result.finished
+  retries: "{{ podman_container_async_retries }}"
+  delay: "{{ podman_container_async_delay }}"
+  loop: "{{ __podman_containers_job_async.results }}"
+  loop_control:
+    loop_var: __podman_containers_job_async_result_item
+
+- name: Set desired configuration for container systemd unit(s)
+  ansible.builtin.systemd:
+    daemon_reload: true
+    name: "{{ __ctr.systemd.container_prefix | default('container') }}-{{ __ctr.name }}"
+    enabled: "{{ __ctr.systemd.enabled }}"
+    scope: user
+    state: "{{ __ctr.systemd.state }}"
+  environment:
+    XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
+  loop: "{{ podman_containers }}"
+  loop_control:
+    loop_var: "__ctr"

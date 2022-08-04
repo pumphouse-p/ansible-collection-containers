@@ -1,0 +1,3 @@
+---
+podman_container_async_retries: 30
+podman_container_async_delay: 1
