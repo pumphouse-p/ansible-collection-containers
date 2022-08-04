@@ -58,9 +58,17 @@
     enabled: "{{ __ctr.systemd.enabled }}"
     scope: user
     state: "{{ __ctr.systemd.state }}"
-  become_method: machinectl
   environment:
     XDG_RUNTIME_DIR: "/run/user/{{ ansible_user_uid }}"
   loop: "{{ podman_containers }}"
   loop_control:
     loop_var: "__ctr"
+
+- name: Clean up unit files when removing a container
+  ansible.builtin.file:
+    path: "{{ __ctr.systemd.container_prefix | default('container') }}-{{ __ctr.name }}"
+    state: absent
+  loop: "{{ podman_containers }}"
+  loop_control:
+    loop_var: "__ctr"
+  when: __ctr.state == 'absent'
