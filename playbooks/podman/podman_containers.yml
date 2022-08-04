@@ -1,0 +1,21 @@
+---
+- name: Ensure Podman containers at desired state
+  hosts: all
+  become: false
+
+  roles:
+    - role: podman_container
+      vars:
+        podman_containers:
+        - name: "{{ podman_container_name }}"
+          image: "{{ podman_container_image }}"
+          state: "{{ podman_container_state }}"
+          env: "{{ podman_container_env | from_yaml }}"
+          publish: "{{ podman_container_publish | from_yaml }}"
+          publish_all: "{{ podman_container_publish_all | bool }}"
+          rm: "{{ podman_container_rm | bool }}"
+          labels: "{{ podman_container_labels | from_yaml }}"
+          annotations: "{{ podman_container_annotations | from_yaml }}"
+          systemd:
+            enabled: "{{ podman_container_systemd_enabled | bool }}"
+            state: "{{ podman_container_systemd_state }}"
