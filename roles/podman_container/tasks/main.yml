@@ -72,3 +72,7 @@
   loop_control:
     loop_var: "__ctr"
   when: __ctr.state == 'absent'
+
+- name: Output container info
+  ansible.builtin.debug:
+    var: __podman_containers_job_async.results
