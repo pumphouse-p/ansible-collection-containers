@@ -1,0 +1,23 @@
+---
+- name: Ensure namespaces are present
+  kubernetes.core.k8s:
+    state: present
+    kind: Namespace
+    api_version: v1
+    name: "{{ ns.name }}"
+    definition:
+      metadata:
+        labels: "{{ ns.labels }}"
+  loop: "{{ kubernetes_namespaces_present }}"
+  loop_control:
+    loop_var: ns
+
+- name: Ensure namespaces are absent
+  kubernetes.core.k8s:
+    state: absent
+    kind: Namespace
+    api_version: v1
+    name: "{{ ns.name }}"
+  loop: "{{ kubernetes_namespaces_absent }}"
+  loop_control:
+    loop_var: ns
