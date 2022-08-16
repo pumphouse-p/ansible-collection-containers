@@ -1,0 +1,14 @@
+- name: Ensure Namespaces are at desired state
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    helm_install_repo_name: bitnami
+    helm_install_repo_url: https://charts.bitnami.com/bitnami
+    helm_install_name: nginx-server
+    helm_install_release_namespace: nginx-server
+    helm_install_create_namespace: true
+    helm_install_chart_ref: bitnami/nginx
+
+  roles:
+     - role: helm_install

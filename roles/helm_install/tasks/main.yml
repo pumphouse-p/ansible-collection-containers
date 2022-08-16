@@ -1,0 +1,37 @@
+---
+- name: Ensure repo is present
+  kubernetes.core.helm_repository:
+    repo_name: "{{ helm_install_repo_name }}"
+    repo_password: "{{ helm_install_repo_password | default(omit) }}"
+    repo_state: present
+    repo_url: "{{ helm_install_repo_url }}"
+    repo_username: "{{ helm_install_repo_username | default(omit) }}"
+    validate_certs: "{{ helm_install_repo_validate_certs | default(false) }}"
+
+- name: Ensure packages are present
+  kubernetes.core.helm:
+    name: "{{ helm_install_name }}"
+    atomic: "{{ helm_install_atomic | default(false) }}"
+    chart_ref: "{{ helm_install_chart_ref }}"
+    chart_repo_url: "{{ helm_install_chart_repo_url | default(omit) }}"
+    chart_version: "{{ helm_install_chart_version | default(omit) }}"
+    create_namespace: "{{ helm_install_create_namespace | default(true) }}"
+    force: "{{ helm_install_force | default(false) }}"
+    release_name: "{{ helm_install_release_name }}"
+    release_namespace: "{{ helm_install_release_namespace }}"
+    release_state: present
+    release_values: "{{ helm_install_release_values | default(omit) }}"
+    update_repo_cache: "{{ helm_install_update_repo_cache | default(false) }}"
+    validate_certs: "{{ helm_install_validate_certs | default(false) }}"
+    values_files: "{{ helm_install_values_files | default(omit) }}"
+    wait: "{{ helm_install_wait | default(false) }}"
+
+- name: Gather information
+  kubernetes.core.helm_info:
+    name: "{{ helm_install_name }}"
+    release_namespace: "{{ helm_install_release_namespace }}"
+  register: __helm_install_chart_info
+
+- name: Output information
+  ansible.builtin.debug:
+    var: __helm_install_chart_info
