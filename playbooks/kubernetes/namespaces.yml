@@ -5,7 +5,7 @@
   vars:
     kubernetes_namespaces_present:
       - name: "{{ (namespace_present_name | length > 0) | ternary(namespace_present_name, omit)}}"
-        labels: "{{ (namespace_present_labels | from_yaml | length > 0) | ternary(namespace_present_labels, omit) }}"
+        labels: "{{ ((namespace_present_labels | from_yaml) | length > 0) | ternary(namespace_present_labels, omit) }}"
 
     kubernetes_namespaces_absent:
       - name: "{{ (namespace_absent_name | length > 0) | ternary(namespace_absent_name, omit) }}"
