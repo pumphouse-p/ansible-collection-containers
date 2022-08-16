@@ -17,7 +17,7 @@
     chart_version: "{{ helm_install_chart_version | default(omit) }}"
     create_namespace: "{{ helm_install_create_namespace | default(true) }}"
     force: "{{ helm_install_force | default(false) }}"
-    release_name: "{{ helm_install_release_name }}"
+    release_name: "{{ helm_install_release_name | default(omit) }}"
     release_namespace: "{{ helm_install_release_namespace }}"
     release_state: present
     release_values: "{{ helm_install_release_values | default(omit) }}"
