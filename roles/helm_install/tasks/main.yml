@@ -8,6 +8,9 @@
     repo_username: "{{ helm_install_repo_username | default(omit) }}"
     validate_certs: "{{ helm_install_repo_validate_certs | default(false) }}"
 
+- name: Pause for troubleshooting
+  ansible.builtin.pause:
+
 - name: Ensure packages are present
   kubernetes.core.helm:
     name: "{{ helm_install_name }}"
