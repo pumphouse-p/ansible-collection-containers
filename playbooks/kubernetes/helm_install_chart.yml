@@ -3,7 +3,7 @@
   become: false
   gather_facts: false
   vars:
-    helm_install_release_values: "{{ (helm_install_release_values_yaml | length > 0) | ternary((helm_install_release_values_yaml | to_yaml), omit)}}"
+    helm_install_release_values: "{{ (helm_install_release_values_yaml | length > 0) | ternary((helm_install_release_values_yaml | from_yaml), omit)}}"
 
   roles:
     - role: helm_install
