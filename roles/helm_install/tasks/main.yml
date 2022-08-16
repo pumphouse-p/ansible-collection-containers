@@ -16,7 +16,6 @@
     chart_repo_url: "{{ helm_install_chart_repo_url | default(omit) }}"
     chart_version: "{{ helm_install_chart_version | default(omit) }}"
     create_namespace: "{{ helm_install_create_namespace | default(true) }}"
-    kubeconfig: "{{ lookup('ansible.builtin.env', 'K8S_AUTH_KUBECONFIG') }}"
     force: "{{ helm_install_force | default(false) }}"
     release_name: "{{ helm_install_release_name | default(omit) }}"
     release_namespace: "{{ helm_install_release_namespace }}"
@@ -26,6 +25,8 @@
     validate_certs: "{{ helm_install_validate_certs | default(false) }}"
     values_files: "{{ helm_install_values_files | default(omit) }}"
     wait: "{{ helm_install_wait | default(false) }}"
+  environment:
+    KUBECONFIG: "{{ lookup('ansible.builtin.env', K8S_AUTH_KUBECONFIG) }}"
 
 - name: Gather information
   kubernetes.core.helm_info:
