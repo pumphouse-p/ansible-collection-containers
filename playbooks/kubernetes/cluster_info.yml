@@ -1,0 +1,13 @@
+---
+- name: Retrieve and display Kubernetes cluster information
+  hosts: all
+  become: false
+
+  tasks:
+    - name: Retrieve cluster information
+      kubernetes.core.k8s_cluster_info:
+      register: __cluster_status
+
+    - name: Display cluster information
+      ansible.builtin.debug:
+        var: __cluster_status
