@@ -9,6 +9,9 @@
     helm_install_release_namespace: nginx-server
     helm_install_create_namespace: true
     helm_install_chart_ref: bitnami/nginx
+    helm_install_release_values:
+      ingress:
+        hostname: http.kube.devinforyou.com
 
   roles:
-     - role: helm_install
+    - role: helm_install
