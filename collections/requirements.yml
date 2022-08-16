@@ -1,5 +1,5 @@
 ---
-collections:
-  - name: community.general
-  - name: containers.podman
-  - name: kubernetes.core
+# collections:
+#   - name: community.general
+#   - name: containers.podman
+#   - name: kubernetes.core
