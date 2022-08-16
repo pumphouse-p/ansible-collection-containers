@@ -10,4 +10,4 @@
     helm_uninstall_delete_repo: true
 
   roles:
-     - role: helm_uninstall
+    - role: helm_uninstall
