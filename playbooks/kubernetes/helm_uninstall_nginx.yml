@@ -1,0 +1,13 @@
+- name: Ensure cleanup of chart, namespace, and repo
+  hosts: all
+  become: false
+  gather_facts: false
+  vars:
+    helm_uninstall_name: nginx-server
+    helm_uninstall_release_namespace: nginx-server
+    helm_uninstall_delete_namespace: true
+    helm_uninstall_repo_name: bitnami
+    helm_uninstall_delete_repo: true
+
+  roles:
+     - role: helm_uninstall

@@ -1,0 +1,3 @@
+---
+helm_uninstall_delete_namespace: false
+helm_uninstall_delete_repo: false

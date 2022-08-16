@@ -1,0 +1,21 @@
+---
+- name: Ensure packages are absent
+  kubernetes.core.helm:
+    name: "{{ helm_uninstall_name }}"
+    release_namespace: "{{ helm_uninstall_release_namespace }}"
+    release_state: absent
+    wait: "{{ helm_uninstall_wait | default(false) }}"
+
+- name: Remove namespace when desired
+  kubernetes.core.k8s:
+    state: absent
+    kind: Namespace
+    api_version: v1
+    name: "{{ helm_uninstall_release_namespace }}"
+  when: helm_uninstall_delete_namespace
+
+- name: Remove repo when desired
+  kubernetes.core.helm_repository:
+    repo_name: "{{ helm_uninstall_repo_name }}"
+    repo_state: absent
+  when: helm_uninstall_delete_repo
