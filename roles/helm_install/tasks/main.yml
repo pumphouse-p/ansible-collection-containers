@@ -26,6 +26,8 @@
     values_files: "{{ helm_install_values_files | default(omit) }}"
     wait: "{{ helm_install_wait | default(false) }}"
   ignore_errors: true
+  environment:
+    K8S_AUTH_CONTEXT: microshift
 
 - name: Pause for debugging
   ansible.builtin.pause:
