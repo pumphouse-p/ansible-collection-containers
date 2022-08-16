@@ -1,0 +1,7 @@
+- name: Ensure chart is uninstalled
+  hosts: all
+  become: false
+  gather_facts: false
+
+  roles:
+    - role: helm_uninstall
