@@ -1,5 +1,5 @@
-- name: Ensure Namespaces are at desired state
-  hosts: localhost
+- name: Ensure Nginx chart is installed
+  hosts: all
   become: false
   gather_facts: false
   vars:

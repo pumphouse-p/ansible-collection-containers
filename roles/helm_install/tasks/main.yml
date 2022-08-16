@@ -25,8 +25,6 @@
     validate_certs: "{{ helm_install_validate_certs | default(false) }}"
     values_files: "{{ helm_install_values_files | default(omit) }}"
     wait: "{{ helm_install_wait | default(false) }}"
-  environment:
-    KUBECONFIG: "{{ lookup('ansible.builtin.env', 'K8S_AUTH_KUBECONFIG') }}"
 
 - name: Gather information
   kubernetes.core.helm_info:
