@@ -1,6 +1,6 @@
 - name: Ensure Nginx chart is installed
   hosts: all
-  become: false
+  become: true
   gather_facts: false
   vars:
     helm_install_repo_name: bitnami
