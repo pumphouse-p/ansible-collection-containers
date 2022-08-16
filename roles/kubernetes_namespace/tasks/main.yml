@@ -11,6 +11,7 @@
   loop: "{{ kubernetes_namespaces_present }}"
   loop_control:
     loop_var: ns
+  when: kubernetes_namespaces_present | length > 0
 
 - name: Ensure namespaces are absent
   kubernetes.core.k8s:
@@ -21,3 +22,4 @@
   loop: "{{ kubernetes_namespaces_absent }}"
   loop_control:
     loop_var: ns
+  when: kubernetes_namespaces_absent | length > 0
