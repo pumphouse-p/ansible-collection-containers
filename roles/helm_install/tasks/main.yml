@@ -22,7 +22,6 @@
     release_state: present
     release_values: "{{ helm_install_release_values | default(omit) }}"
     update_repo_cache: "{{ helm_install_update_repo_cache | default(false) }}"
-    # validate_certs: "{{ helm_install_validate_certs | default(false) }}"
     values_files: "{{ helm_install_values_files | default(omit) }}"
     wait: "{{ helm_install_wait | default(false) }}"
 

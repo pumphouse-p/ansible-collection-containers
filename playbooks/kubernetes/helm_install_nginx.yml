@@ -10,8 +10,11 @@
     helm_install_create_namespace: true
     helm_install_chart_ref: bitnami/nginx
     helm_install_release_values:
+      service:
+        type: ClusterIP
       ingress:
         hostname: http.kube.devinforyou.com
+        enabled: true
 
   roles:
     - role: helm_install
