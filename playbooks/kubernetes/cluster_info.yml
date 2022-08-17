@@ -1,6 +1,6 @@
 ---
 - name: Retrieve and display Kubernetes cluster information
-  hosts: all
+  hosts: localhost
   become: false
 
   tasks:
