@@ -1,5 +1,5 @@
 - name: Ensure cleanup of chart, namespace, and repo
-  hosts: all
+  hosts: localhost
   become: false
   gather_facts: false
   vars:

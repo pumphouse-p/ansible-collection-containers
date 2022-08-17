@@ -1,5 +1,5 @@
 - name: Ensure Nginx chart is installed
-  hosts: all
+  hosts: localhost
   become: true
   gather_facts: false
   vars:
