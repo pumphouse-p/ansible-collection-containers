@@ -16,6 +16,7 @@
           rm: "{{ podman_container_rm | bool }}"
           labels: "{{ podman_container_labels | from_yaml }}"
           annotations: "{{ podman_container_annotations | from_yaml }}"
+          recreate: "{{ podman_container_recreate }}"
           systemd:
             enabled: "{{ podman_container_systemd_enabled | bool }}"
             state: "{{ podman_container_systemd_state }}"
