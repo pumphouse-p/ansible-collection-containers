@@ -8,7 +8,7 @@
 
 - name: Load operating system specific variables
   ansible.builtin.include_vars:
-    file: "{{ ansible_distribution | lower }}.yml"
+    file: "{{ ansible_os_family | lower }}.yml"
 
 - name: Install podman tools
   ansible.builtin.package:
