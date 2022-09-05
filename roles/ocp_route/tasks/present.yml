@@ -1,0 +1,25 @@
+---
+- name: Ensure Route exists
+  redhat.openshift.openshift_route:
+    service: "{{ ocp_route_service }}"
+    namespace: "{{ ocp_route_namespace }}"
+    annotations: "{{ ocp_route_annotations | default(omit) }}"
+    force: "{{ ocp_route_force | default(omit) }}"
+    hostname: "{{ ocp_route_hostname | default(omit) }}"
+    labels: "{{ ocp_route_labels | default(omit) }}"
+    name: "{{ ocp_route_name | default(omit) }}"
+    path: "{{ ocp_route_path | default(omit) }}"
+    port: "{{ ocp_route_port | default(omit) }}"
+    state: present
+    termination: "{{ ocp_route_termination | default(omit) }}"
+    tls:
+      ca_certificate: "{{ ocp_route_tls_ca_certificate | default(omit) }}"
+      certificate: "{{ ocp_route_tls_certificate | default(omit) }}"
+      destination_ca_certificate: "{{ ocp_route_tls_destination_ca_certificate | default(omit) }}"
+      insecure_policy: "{{ ocp_route_tls_insecure_policy | default(omit) }}"
+      key: "{{ ocp_route_tls_key | default(omit) }}"
+  register: __route
+
+- name: Debug output
+  ansible.builtin.debug:
+    var: __route

@@ -1,0 +1,10 @@
+---
+- name: Ensure Route exists
+  ansible.builtin.include_tasks:
+    file: present.yml
+  when: ocp_route_state == 'present'
+
+- name: Ensure Route does not exist
+  ansible.builtin.include_tasks:
+    file: absent.yml
+  when: ocp_route_state == 'absent'

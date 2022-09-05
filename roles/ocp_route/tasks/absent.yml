@@ -1,0 +1,11 @@
+---
+- name: Ensure Route does not exist
+  redhat.openshift.openshift_route:
+    name: "{{ ocp_route_name }}"
+    namespace: "{{ ocp_route_namespace }}"
+    state: absent
+  register: __route
+
+- name: Debug output
+  ansible.builtin.debug:
+    var: __route
