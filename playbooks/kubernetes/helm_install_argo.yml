@@ -1,0 +1,18 @@
+- name: Ensure ArgoCD chart is installed
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    helm_install_repo_name: argo
+    helm_install_repo_url: https://argoproj.github.io/argo-helm
+    helm_install_name: argo
+    helm_install_release_namespace: argo
+    helm_install_create_namespace: true
+    helm_install_chart_ref: argo/argo-cd
+    helm_install_release_values:
+      server:
+        extraArgs:
+          - --insecure
+
+  roles:
+    - role: helm_install

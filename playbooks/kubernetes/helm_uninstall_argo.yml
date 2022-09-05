@@ -1,0 +1,13 @@
+- name: Ensure ArgoCD is not installed
+  hosts: localhost
+  become: false
+  gather_facts: false
+  vars:
+    helm_uninstall_name: argo
+    helm_uninstall_release_namespace: argo
+    helm_uninstall_delete_namespace: true
+    helm_uninstall_repo_name: argo
+    helm_uninstall_delete_repo: true
+
+  roles:
+    - role: helm_uninstall
