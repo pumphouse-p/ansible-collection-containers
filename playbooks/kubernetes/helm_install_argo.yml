@@ -18,6 +18,7 @@
     ocp_route_termination: "edge"
     ocp_route_hostname: "argo.kube.devinforyou.com"
     ocp_route_service: "argo-argocd-server"
+    ocp_route_name: "argocd-server"
 
   roles:
     - role: helm_install
