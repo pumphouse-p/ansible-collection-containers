@@ -6,7 +6,7 @@
     helm_install_repo_name: argo
     helm_install_repo_url: https://argoproj.github.io/argo-helm
     helm_install_name: argo
-    helm_install_release_namespace: argo
+    helm_install_release_namespace: openshift-gitops
     helm_install_create_namespace: true
     helm_install_chart_ref: argo/argo-cd
     helm_install_release_values:
