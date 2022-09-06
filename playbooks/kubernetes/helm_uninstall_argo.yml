@@ -4,14 +4,14 @@
   gather_facts: false
   vars:
     helm_uninstall_name: argo
-    helm_uninstall_release_namespace: argo
+    helm_uninstall_release_namespace: openshift-gitops
     helm_uninstall_delete_namespace: true
     helm_uninstall_repo_name: argo
     helm_uninstall_delete_repo: true
     ocp_route_state: "absent"
     ocp_route_namespace: "{{ helm_uninstall_release_namespace }}"
     ocp_route_name: "argocd-server"
-    
+
   roles:
     - role: ocp_route
     - role: helm_uninstall
