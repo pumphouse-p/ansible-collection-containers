@@ -1,0 +1,17 @@
+---
+- name: Bootstrap argo project and app of apps
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Create App project
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'manifests/argo-bootstrap/app_projects.yaml') }}"
+        state: present
+        wait: true
+
+    - name: Create App of Apps
+      kubernetes.core.k8s:
+        definition: "{{ lookup('file', 'manifests/argo-bootstrap/app_of_apps.yaml') }}"
+        state: present

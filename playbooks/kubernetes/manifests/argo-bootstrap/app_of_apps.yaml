@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster-config
+  namespace: openshift-gitops
+  labels:
+    gitops.ownedBy: cluster-config
+spec:
+  destination:
+    namespace: argo
+    server: https://kubernetes.default.svc
+  project: cluster-config
+  source:
+    path: clusters/microshift/apps
+    repoURL: https://github.com/pumphouse-p/shiftops.git
+    targetRevision: main
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
