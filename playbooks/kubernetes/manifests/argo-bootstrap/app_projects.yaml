@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: cluster-config
-  namespace: argo
+  namespace: openshift-gitops
 spec:
   clusterResourceWhitelist:
     - group: "*"
@@ -17,7 +17,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: platform-apps
-  namespace: argo
+  namespace: openshift-gitops
 spec:
   clusterResourceWhitelist:
     - group: "*"
@@ -32,7 +32,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: AppProject
 metadata:
   name: demo-apps
-  namespace: argo
+  namespace: openshift-gitops
 spec:
   clusterResourceWhitelist:
     - group: "*"
