@@ -73,6 +73,8 @@
   loop: "{{ podman_containers }}"
   loop_control:
     loop_var: "__ctr"
+  retries: "{{ podman_container_async_retries }}"
+  delay: "{{ podman_container_async_delay }}"
 
 - name: Clean up unit files when removing a container
   ansible.builtin.file:
