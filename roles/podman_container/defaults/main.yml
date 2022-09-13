@@ -1,3 +1,4 @@
 ---
 podman_container_async_retries: 30
 podman_container_async_delay: 1
+podman_force_pull_image: true

@@ -1,4 +1,14 @@
 ---
+- name: Force pull container when desired
+  containers.podman.podman_image:
+    name: "{{ _ctr.name }}"
+    state: present
+    force: true
+  loop: "{{ podman_containers }}"
+  loop_control:
+    loop_var: "__ctr"
+  when: podman_force_pull_image
+
 - name: Ensure containers at desired state and configuration
   containers.podman.podman_container:
     name: "{{ __ctr.name }}"
