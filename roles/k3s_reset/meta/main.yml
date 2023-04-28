@@ -1,0 +1,31 @@
+---
+galaxy_info:
+  author: Devin Parrish
+  role_name: k3s_reset
+  namespace: pumphouse_p.containers
+  description: Resets k3s on systems
+
+  license: GPL
+
+  min_ansible_version: '2.9'
+
+  galaxy_tags:
+    - kubernetes
+    - containers
+    - k3s
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+dependencies: []

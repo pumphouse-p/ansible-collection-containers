@@ -1,0 +1,47 @@
+---
+- name: Disable services
+  ansible.builtin.systemd:
+    name: "{{ service }}"
+    state: stopped
+    enabled: false
+  failed_when: false
+  loop:
+    - k3s
+    - k3s-node
+  loop_control:
+    loop_var: service
+
+- name: Kill containerd shim
+  ansible.builtin.command:
+    cmd: pkill -9 -f "k3s/data/[^/]+/bin/containerd-shim-runc"
+  register: pkill_containerd_shim_runc
+  changed_when: pkill_containerd_shim_runc.rc == 0
+  failed_when: false
+
+- name: Unmount filesystems
+  ansible.posix.mount:
+    path: "{{ mounted_fs }}"
+    state: unmounted
+  loop:
+    - /run/k3s
+    - /var/lib/kubelet
+    - /run/netns
+    - /var/lib/rancher/k3s
+  loop_control:
+    loop_var: mounted_fs
+
+- name: Remove unit, binary, and data files
+  ansible.builtin.file:
+    name: "{{ file }}"
+    state: absent
+  loop:
+    - /usr/local/bin/k3s
+    - "{{ systemd_dir }}/k3s.service"
+    - "{{ systemd_dir }}/k3s-node.service"
+    - /etc/rancher/k3s
+    - /var/lib/kubelet
+    - /var/lib/rancher/k3s
+
+- name: Systemd daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
