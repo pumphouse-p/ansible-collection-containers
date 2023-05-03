@@ -1,0 +1,15 @@
+---
+- name: Write out k3s service file
+  ansible.builtin.template:
+    src: k3s-node.service.j2
+    dest: "{{ systemd_dir }}/k3s-node.service"
+    owner: root
+    group: root
+    mode: 0755
+
+- name: Enable and check k3s service
+  ansible.builtin.systemd:
+    name: k3s-node
+    daemon_reload: true
+    state: restarted
+    enabled: true

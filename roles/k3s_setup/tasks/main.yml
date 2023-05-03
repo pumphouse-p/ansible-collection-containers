@@ -1,0 +1,22 @@
+---
+- name: Run prereq tasks
+  ansible.builtin.include_tasks:
+    file: prereqs.yml
+
+- name: Download k3s binaries
+  ansible.builtin.include_tasks:
+    file: k3s_download.yml
+
+- name: Run raspberrypi tasks
+  ansible.builtin.include_tasks:
+    file: raspberrypi.yml
+
+- name: Run k3s server tasks
+  ansible.builtin.include_tasks:
+    file: k3s_server.yml
+  when: k3s_node_type == 'server'
+
+- name: Run k3s node tasks
+  ansible.builtin.include_tasks:
+    file: k3s_node.yml
+  when: k3s_node_type == 'node'

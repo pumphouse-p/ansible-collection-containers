@@ -1,0 +1,8 @@
+---
+- name: Setup a k3s environment
+  hosts: all
+  become: true
+  gather_facts: true
+
+  roles:
+    - role: k3s_setup

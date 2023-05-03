@@ -1,0 +1,29 @@
+---
+galaxy_info:
+  author: Devin Parrish
+  role_name: ROLE_NAME
+  namespace: pumphouse_p
+  description: ROLE_DESCRIPTION
+
+  license: GPL
+
+  min_ansible_version: 2.9
+
+  galaxy_tags:
+    - ROLE_TAG
+
+  platforms:
+    - name: EL
+      versions:
+        - all
+    - name: Fedora
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - all
+    - name: Debian
+      versions:
+        - all
+
+dependencies: []
