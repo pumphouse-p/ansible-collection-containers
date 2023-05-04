@@ -13,7 +13,7 @@
 
 - name: Enable IPv6 forwarding
   ansible.posix.sysctl:
-    name: net.ipv6.ip_forward
+    name: net.ipv6.conf.all.forwarding
     value: "1"
     state: present
     reload: true
