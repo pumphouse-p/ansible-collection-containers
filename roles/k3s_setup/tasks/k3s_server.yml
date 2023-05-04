@@ -35,7 +35,7 @@
 
 - name: Store server node-token as fact
   ansible.builtin.set_fact:
-    token: "{{ node_token.content | b64decode | regex_replace('\n', '') }}"
+    token: "{{ __node_token_contents.content | b64decode | regex_replace('\n', '') }}"
 
 - name: Restore node-token file access
   ansible.builtin.file:

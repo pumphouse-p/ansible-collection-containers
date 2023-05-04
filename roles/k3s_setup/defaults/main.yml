@@ -1,6 +1,7 @@
 ---
 k3s_version: v1.27.1+k3s1
 k3s_server_location: /var/lib/rancher/k3s
+k3s_server_hostname: ''
 systemd_dir: /etc/systemd/system
 extra_server_args: ""
 extra_agent_args: ""

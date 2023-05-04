@@ -52,3 +52,7 @@
     path: /etc/sudoers
     validate: 'visudo -cf %s'
   when: ansible_distribution in ["CentOS", "Red Hat Enterprise Linux"]
+
+- name: Set fact for server_ip
+  ansible.builtin.set_fact:
+    server_ip: "{{ hostvars[k3s_server_hostname]['ansible_default_ipv4']['address'] }}"
