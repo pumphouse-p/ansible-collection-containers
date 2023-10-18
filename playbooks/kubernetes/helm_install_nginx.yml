@@ -1,3 +1,4 @@
+---
 - name: Ensure Nginx chart is installed
   hosts: localhost
   become: true
@@ -13,7 +14,7 @@
       service:
         type: ClusterIP
       ingress:
-        hostname: http.kube.devinforyou.com
+        hostname: http.apps.lab.devinforyou.com
         enabled: true
 
   roles:
