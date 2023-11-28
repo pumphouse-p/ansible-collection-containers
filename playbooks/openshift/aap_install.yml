@@ -1,0 +1,21 @@
+---
+- name: Install AAP on OpenShift
+  hosts: localhost
+  gather_facts: false
+
+  vars:
+    aap_ocp_install_connection:
+      host: "{{ ocp_api_url }}"
+      username: "{{ ocp_api_username }}"
+      password: "{{ ocp_api_password }}"
+      validate_certs: "{{ ocp_api_validate_certs }}"
+    aap_ocp_install_namespace: "{{ aap_install_namespace }}"
+    aap_ocp_install_operator:
+      channel: "{{ aap_install_version }}"
+    aap_ocp_install_controller:
+      instance_name: "{{ aap_install_controller_name }}"
+    aap_ocp_install_hub:
+      instance_name: "{{ aap_install_hub_name }}"
+
+  roles:
+    - infra.aap_utilities.aap_ocp_install
