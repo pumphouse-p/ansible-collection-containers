@@ -1,0 +1,12 @@
+---
+# Port
+kube_object_pod_port_protocol: TCP
+
+# Readiness probe
+kube_object_pod_readinessProbe_failureThreshold: 3
+kube_object_pod_readinessProbe_initialDelaySeconds: 30
+kube_object_pod_readinessProbe_periodSeconds: 30
+kube_object_pod_readinessProbe_successThreshold: 1
+kube_object_pod_readinessProbe_timeoutSeconds: 3
+
+# Liveness probe

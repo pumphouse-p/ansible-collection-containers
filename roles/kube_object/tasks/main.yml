@@ -3,8 +3,12 @@
   ansible.builtin.assert:
     that:
       - kube_object_type in kube_objects_supported
-    fail_msg: "'kube_object_type' must be one of kube_objects_supported"
-    success_msg: "'kube_object_type' is one of kube_objects_supported"
+    fail_msg: "👎 'kube_object_type' must be one of {{ kube_objects_supported }}."
+    success_msg: "👍 'kube_object_type' is one of {{ kube_objects_supported }}."
+
+- name: Load variables
+  ansible.builtin.include_vars:
+    file: "{{ kube_object_type }}.yml"
 
 - name: Write out manifest to temporary directory
   ansible.builtin.template:
