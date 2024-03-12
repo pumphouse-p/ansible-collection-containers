@@ -1,0 +1,18 @@
+---
+- name: Check for object type
+  ansible.builtin.assert:
+    that:
+      - kube_object_type in kube_objects_supported
+    fail_msg: "'kube_object_type' must be one of kube_objects_supported"
+    success_msg: "'kube_object_type' is one of kube_objects_supported"
+
+- name: Write out manifest to temporary directory
+  ansible.builtin.template:
+    src: "{{ kube_object_type }}.yml.j2"
+    dest: /tmp/{{ kube_object_type }}.yml
+    mode: 0644
+
+- name: Ensure object is at desired state
+  kubernetes.core.k8s:
+    state: "{{ kube_object_state }}"
+    src: /tmp/{{ kube_object_type }}.yml

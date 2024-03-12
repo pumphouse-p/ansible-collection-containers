@@ -1,0 +1,8 @@
+---
+- name: Ensure kubernetes object is at desired state
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  roles:
+    - role: kube_object

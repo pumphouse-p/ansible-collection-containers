@@ -1,0 +1,5 @@
+---
+kube_objects_supported:
+  - namespace
+  - pod
+  - deployment
