@@ -8,7 +8,7 @@
 
 - name: Load variables
   ansible.builtin.include_vars:
-    file: "{{ kube_object_type }}.yml"
+    file: "../vars/{{ kube_object_type }}.yml"
 
 - name: Write out manifest to temporary directory
   ansible.builtin.template:
