@@ -14,7 +14,7 @@ spec:
       imagePullPolicy: IfNotPresent
       ports:
         - containerPort: "{{ kube_object_pod_port_containerPort }}" 
-          name: "{{ kube_object_pod_port_name }}"
+          name: "{{ kube_object_pod_name }}"
           protocol: "{{ kube_object_pod_port_protocol }}"
       readinessProbe:
         failureThreshold: "{{ kube_object_pod_readinessProbe_failureThreshold }}"
