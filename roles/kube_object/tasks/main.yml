@@ -6,10 +6,6 @@
     fail_msg: "👎 'kube_object_type' must be one of {{ kube_objects_supported }}."
     success_msg: "👍 'kube_object_type' is one of {{ kube_objects_supported }}."
 
-- name: Load variables
-  ansible.builtin.include_vars:
-    file: "../vars/{{ kube_object_type }}.yml"
-
 - name: Write out manifest to temporary directory
   ansible.builtin.template:
     src: "{{ kube_object_type }}.yml.j2"
