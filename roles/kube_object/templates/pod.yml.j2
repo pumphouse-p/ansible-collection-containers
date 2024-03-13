@@ -13,7 +13,7 @@ spec:
       image: "{{ kube_object_pod_image }}"
       imagePullPolicy: IfNotPresent
       ports:
-        - containerPort: "{{ kube_object_pod_port_containerPort }}" 
+        - containerPort: "{{ kube_object_pod_port_containerPort | int }}" 
           name: "{{ kube_object_pod_name }}"
           protocol: "{{ kube_object_pod_port_protocol }}"
       readinessProbe:
