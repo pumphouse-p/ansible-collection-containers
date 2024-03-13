@@ -2,23 +2,23 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ kube_object_pod_name }}"
-  namespace: "{{ kube_object_pod_ns }}"
+  name: {{ kube_object_pod_name }}
+  namespace: {{ kube_object_pod_ns }}
   labels:
-    app.kubernetes.io/name: "{{ kube_object_pod_name }}"
-    app.kubernetes.io/instance: "{{ kube_object_pod_name }}"  
+    app.kubernetes.io/name: {{ kube_object_pod_name }}
+    app.kubernetes.io/instance: {{ kube_object_pod_name }}
 spec:
   containers:
-    - name: "{{ kube_object_pod_name }}"
-      image: "{{ kube_object_pod_image }}"
+    - name: {{ kube_object_pod_name }}
+      image: {{ kube_object_pod_image }}
       imagePullPolicy: IfNotPresent
       ports:
-        - containerPort: "{{ kube_object_pod_port_containerPort | int }}" 
-          name: "{{ kube_object_pod_name }}"
-          protocol: "{{ kube_object_pod_port_protocol }}"
+        - containerPort: {{ kube_object_pod_port_containerPort }}
+          name: {{ kube_object_pod_name }}
+          protocol: {{ kube_object_pod_port_protocol }}
       readinessProbe:
-        failureThreshold: "{{ kube_object_pod_readinessProbe_failureThreshold }}"
-        initialDelaySeconds: "{{ kube_object_pod_readinessProbe_initialDelaySeconds }}"
-        periodSeconds: "{{ kube_object_pod_readinessProbe_periodSeconds }}"
-        successThreshold: "{{ kube_object_pod_readinessProbe_successThreshold }}"
-        timeoutSeconds: "{{ kube_object_pod_readinessProbe_timeoutSeconds }}"
+        failureThreshold: {{ kube_object_pod_readinessProbe_failureThreshold }}
+        initialDelaySeconds: {{ kube_object_pod_readinessProbe_initialDelaySeconds }}
+        periodSeconds: {{ kube_object_pod_readinessProbe_periodSeconds }}
+        successThreshold: {{ kube_object_pod_readinessProbe_successThreshold }}
+        timeoutSeconds: {{ kube_object_pod_readinessProbe_timeoutSeconds }}
