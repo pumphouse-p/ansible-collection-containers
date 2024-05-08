@@ -1,0 +1,31 @@
+---
+- name: Ensure OpenShift GitOps is absent
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Ensure subscription {{ gitops_subscription }} is absent
+      redhat.openshift.k8s:
+        state: absent
+        wait: true
+        api_version: operators.coreos.com/v1alpha1
+        kind: Subscription
+        namespace: "{{ gitops_namespace }}"
+        name: "{{ gitops_subscription }}"
+
+    - name: Ensure operator group {{ gitops_operator_group }} is absent
+      redhat.openshift.k8s:
+        state: absent
+        wait: true
+        api_version: operatores.coreos.com/v1
+        kind: OperatorGroup
+        namespace: "{{ gitops_namespace }}"
+        name: "{{ gitops_operator_group }}"
+
+    - name: Ensure namespace {{ gitops_namespace }} is absent
+      redhat.openshift.k8s:
+        name: "{{ gitops_namespace }}"
+        api_version: v1
+        kind: Namespace
+        state: absent

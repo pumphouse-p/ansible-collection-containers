@@ -2,3 +2,6 @@
 collections:
   - name: ansible.posix
   - name: infra.aap_utilities
+  - name: redhat.openshift
+  - name: kubernetes.core
+  - name: redhat.openshift_virtualization

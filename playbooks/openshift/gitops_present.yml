@@ -1,0 +1,41 @@
+---
+- name: Ensure OpenShift GitOps is present
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Ensure namespace {{ gitops_namespace }} is present
+      redhat.openshift.k8s:
+        name: "{{ gitops_namespace }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Ensure operator group {{ gitops_operator_group }} is present
+      redhat.openshift.k8s:
+        state: present
+        spec:
+          apiVersion: operators.coreos.com/v1
+          kind: OperatorGroup
+          metadata:
+            name: "{{ gitops_operator_group }}"
+            namespace: "{{ gitops_namespace }}"
+          spec:
+            upgradeStrategy: Default
+
+    - name: Ensure subscription {{ gitops_subscription }} is present
+      redhat.openshift.k8s:
+        state: present
+        spec:
+          apiVersion: operators.coreos.com/v1alpha1
+          kind: Subscription
+          metadata:
+            name: "{{ gitops_subscription }}"
+            namespace: "{{ gitops_namespace }}"
+          spec:
+            channel: latest
+            installPlanApproval: automatic
+            name: "{{ gitops_operator_group }}"
+            source: redhat-operators
+            sourceNamespace: openshift-marketplace
