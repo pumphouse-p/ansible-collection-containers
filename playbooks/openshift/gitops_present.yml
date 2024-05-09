@@ -39,3 +39,12 @@
             name: "{{ gitops_operator_group }}"
             source: redhat-operators
             sourceNamespace: openshift-marketplace
+    
+    - name: Wait for {{ gitops_subscription }} to complete deployment
+      kubernetes.core.k8s_info:
+        kind: Deployment
+        name: openshift-gitops-server
+        namespace: "{{ gitops_namespace }}"
+        wait: true
+        wait_sleep: 10
+        wait_timeout: 600
