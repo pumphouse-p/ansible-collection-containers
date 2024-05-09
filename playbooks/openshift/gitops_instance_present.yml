@@ -31,12 +31,6 @@
         kind: Route
         name: "{{ argocd_instance_name }}-server"
         namespace: "{{ argocd_instance_namespace }}"
-        wait: true
-        wait_sleep: 10
-        wait_timeout: 600
-        wait_condition:
-          status: "True"
-          type: Admitted
       register: r_route_admission
 
     - name: Print route info
