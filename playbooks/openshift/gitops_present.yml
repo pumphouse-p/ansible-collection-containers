@@ -44,7 +44,7 @@
       kubernetes.core.k8s_info:
         kind: Deployment
         name: openshift-gitops-server
-        namespace: "{{ gitops_namespace }}"
+        namespace: openshift-gitops
         wait: true
         wait_sleep: 10
         wait_timeout: 600
