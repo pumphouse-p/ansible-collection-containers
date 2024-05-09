@@ -15,7 +15,7 @@
     - name: Ensure operator group {{ gitops_operator_group }} is present
       redhat.openshift.k8s:
         state: present
-        spec:
+        definition:
           apiVersion: operators.coreos.com/v1
           kind: OperatorGroup
           metadata:
@@ -27,7 +27,7 @@
     - name: Ensure subscription {{ gitops_subscription }} is present
       redhat.openshift.k8s:
         state: present
-        spec:
+        definition:
           apiVersion: operators.coreos.com/v1alpha1
           kind: Subscription
           metadata:
