@@ -1,0 +1,44 @@
+---
+- name: Ensure ArgoCD instance {{ argocd_instance_name }} is present
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Ensure namespace {{ argocd_instance_namespace }} is present
+      redhat.openshift.k8s:
+        name: "{{ argocd_instance_namespace }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+
+    - name: Ensure ArgoCD instance {{ argocd_instance_name }} is present
+      redhat.openshift.k8s:
+        state: present
+        definition:
+          apiVersion: argoproj.io/v1beta1
+          kind: ArgoCD
+          metadata:
+            name: "{{ argocd_instance_name }}"
+            namespace: "{{ argocd_instance_namespace }}"
+          spec:
+            server:
+              route:
+                enabled: "{{ argocd_instance_enable_route | default(true) }}"
+
+    - name: Wait for route to be created
+      kubernetes.core.k8s_info:
+        kind: Route
+        name: "{{ argocd_instance_name }}-server"
+        namespace: "{{ argocd_instance_namespace }}"
+        wait: true
+        wait_sleep: 10
+        wait_timeout: 600
+        wait_condition:
+          status: "True"
+          type: Admitted
+      register: r_route_admission
+
+    - name: Print route info
+      ansible.builtin.debug:
+        var: r_route_admission
