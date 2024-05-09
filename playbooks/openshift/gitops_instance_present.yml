@@ -32,7 +32,21 @@
         name: "{{ argocd_instance_name }}-server"
         namespace: "{{ argocd_instance_namespace }}"
       register: r_route_admission
+      until: r_route_admission.resources.0.status.ingress.0.host is defined
+      delay: 5
+      retries: 60
+
+    - name: Collect secret for admin key
+      kubernetes.core.k8s_info:
+        kind: Secret
+        name: "{{ argocd_instance_name }}-cluster"
+        namespace: "{{ argocd_instance_namespace }}"
+      register: r_argo_secret
 
     - name: Print route info
       ansible.builtin.debug:
         var: r_route_admission
+
+    - name: Print secret info
+      ansible.builtin.debug:
+        var: r_argo_secret
