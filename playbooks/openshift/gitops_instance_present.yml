@@ -58,6 +58,6 @@
 
     - name: ArgoCD Connection Details
       ansible.builtin.debug:
-        msg: |
-          ArgoCD URL: "{{ f_argocd_url }}"
-          ArgoCD Admin Password: "{{ f_argocd_admin_pass }}"
+        msg:
+          - ArgoCD URL: {{ f_argocd_url }}
+          - ArgoCD Admin Password: {{ f_argocd_admin_pass }}
