@@ -18,7 +18,7 @@
       redhat.openshift.k8s:
         state: absent
         wait: true
-        api_version: operatores.coreos.com/v1
+        api_version: operators.coreos.com/v1
         kind: OperatorGroup
         namespace: "{{ gitops_namespace }}"
         name: "{{ gitops_operator_group }}"
