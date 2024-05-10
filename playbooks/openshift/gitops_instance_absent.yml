@@ -18,5 +18,5 @@
         name: "{{ argocd_instance_namespace }}"
         api_version: v1
         kind: Namespace
-        state: present
-      when: argocd_instance_namespace_remove | default('false')
+        state: absent
+      when: argocd_instance_namespace_remove | default(false)
