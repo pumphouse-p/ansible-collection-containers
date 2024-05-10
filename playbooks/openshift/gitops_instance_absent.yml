@@ -1,0 +1,22 @@
+---
+- name: Ensure ArgoCD instance {{ argocd_instance_name }} is absent
+  hosts: localhost
+  become: false
+  gather_facts: false
+
+  tasks:
+    - name: Ensure ArgoCD instance {{ argocd_instance_name }} is absent
+      redhat.openshift.k8s:
+        state: absent
+        api_version: argoproj.io/v1beta1
+        kind: ArgoCD
+        namespace: "{{ argocd_instance_namespace }}"
+        name: "{{ argocd_instance_name }}"
+
+    - name: Ensure namespace {{ argocd_instance_namespace }} is absent
+      redhat.openshift.k8s:
+        name: "{{ argocd_instance_namespace }}"
+        api_version: v1
+        kind: Namespace
+        state: present
+      when: argocd_instance_namespace_remove | default('false')
