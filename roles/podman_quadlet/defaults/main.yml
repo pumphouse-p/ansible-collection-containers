@@ -3,7 +3,7 @@
 podman_quadlet_scope: system
 
 # User to run quadlets under (only applies when scope is 'user')
-podman_quadlet_user: "{{ ansible_user_id }}"
+podman_quadlet_user: "{{ ansible_user }}"
 
 # Quadlet directory paths
 podman_quadlet_system_path: /etc/containers/systemd
