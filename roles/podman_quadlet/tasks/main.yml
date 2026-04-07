@@ -1,4 +1,9 @@
 ---
+- name: Set default user if not defined
+  ansible.builtin.set_fact:
+    podman_quadlet_user: "{{ ansible_user }}"
+  when: podman_quadlet_user is not defined or podman_quadlet_user == None or podman_quadlet_user == ''
+
 - name: Get home directory for user scope
   ansible.builtin.getent:
     database: passwd

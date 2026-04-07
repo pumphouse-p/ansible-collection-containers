@@ -3,11 +3,12 @@
 podman_quadlet_scope: system
 
 # User to run quadlets under (only applies when scope is 'user')
-podman_quadlet_user: "{{ ansible_user }}"
+# Leave undefined to use ansible_user
+podman_quadlet_user:
 
 # Quadlet directory paths
 podman_quadlet_system_path: /etc/containers/systemd
-podman_quadlet_user_path: "~{{ podman_quadlet_user }}/.config/containers/systemd"
+# User path is constructed dynamically in tasks based on actual home directory
 
 # State: 'present' or 'absent'
 podman_quadlet_state: present

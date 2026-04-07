@@ -16,12 +16,15 @@ Ansible role to manage Podman Quadlet files for containers, networks, and volume
 podman_quadlet_scope: system
 
 # User to run quadlets under (only applies when scope is 'user')
-podman_quadlet_user: "{{ ansible_user_id }}"
+# Defaults to ansible_user if not specified
+podman_quadlet_user:  # Optional, auto-detected
 
 # Quadlet directory paths (auto-selected based on scope)
 podman_quadlet_system_path: /etc/containers/systemd
-podman_quadlet_user_path: "~{{ podman_quadlet_user }}/.config/containers/systemd"
+# User path is dynamically constructed: ~<user>/.config/containers/systemd
 ```
+
+> **Note:** The role automatically resolves `podman_quadlet_user` to `ansible_user` if not explicitly set, and dynamically constructs the user quadlet directory path based on the actual home directory from `/etc/passwd`.
 
 ### Service Management
 
