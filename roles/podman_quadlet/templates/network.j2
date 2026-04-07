@@ -1,0 +1,71 @@
+# Ansible managed - {{ network.name }}.network
+{% if network.unit is defined %}
+[Unit]
+{% if network.unit.description is defined %}
+Description={{ network.unit.description }}
+{% endif %}
+{% if network.unit.after is defined %}
+After={{ network.unit.after if network.unit.after is string else network.unit.after | join(' ') }}
+{% endif %}
+{% if network.unit.requires is defined %}
+Requires={{ network.unit.requires if network.unit.requires is string else network.unit.requires | join(' ') }}
+{% endif %}
+
+{% endif %}
+[Network]
+{% if network.network_name is defined %}
+NetworkName={{ network.network_name }}
+{% endif %}
+{% if network.disable_dns is defined %}
+DisableDNS={{ network.disable_dns | bool | lower }}
+{% endif %}
+{% if network.dns is defined %}
+{% for dns in ([network.dns] if network.dns is string else network.dns) %}
+DNS={{ dns }}
+{% endfor %}
+{% endif %}
+{% if network.driver is defined %}
+Driver={{ network.driver }}
+{% endif %}
+{% if network.gateway is defined %}
+Gateway={{ network.gateway }}
+{% endif %}
+{% if network.interface_name is defined %}
+InterfaceName={{ network.interface_name }}
+{% endif %}
+{% if network.internal is defined %}
+Internal={{ network.internal | bool | lower }}
+{% endif %}
+{% if network.ipam_driver is defined %}
+IPAMDriver={{ network.ipam_driver }}
+{% endif %}
+{% if network.ip_range is defined %}
+IPRange={{ network.ip_range }}
+{% endif %}
+{% if network.ipv6 is defined %}
+IPv6={{ network.ipv6 | bool | lower }}
+{% endif %}
+{% if network.labels is defined %}
+{% for label_key, label_value in network.labels.items() %}
+Label={{ label_key }}={{ label_value }}
+{% endfor %}
+{% endif %}
+{% if network.options is defined %}
+{% for opt_key, opt_value in network.options.items() %}
+Options={{ opt_key }}={{ opt_value }}
+{% endfor %}
+{% endif %}
+{% if network.subnet is defined %}
+{% for subnet in ([network.subnet] if network.subnet is string else network.subnet) %}
+Subnet={{ subnet }}
+{% endfor %}
+{% endif %}
+{% if network.podman_args is defined %}
+PodmanArgs={{ network.podman_args if network.podman_args is string else network.podman_args | join(' ') }}
+{% endif %}
+
+[Install]
+WantedBy={{ network.install.wanted_by | default('multi-user.target' if podman_quadlet_scope == 'system' else 'default.target') }}
+{% if network.install is defined and network.install.required_by is defined %}
+RequiredBy={{ network.install.required_by if network.install.required_by is string else network.install.required_by | join(' ') }}
+{% endif %}

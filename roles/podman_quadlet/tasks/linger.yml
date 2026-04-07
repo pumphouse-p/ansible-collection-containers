@@ -1,0 +1,20 @@
+---
+- name: Check if linger is enabled for user
+  ansible.builtin.stat:
+    path: "/var/lib/systemd/linger/{{ podman_quadlet_user }}"
+  register: linger_status
+  become: true
+
+- name: Enable linger for user to allow services when not logged in
+  ansible.builtin.command:
+    cmd: "loginctl enable-linger {{ podman_quadlet_user }}"
+  become: true
+  when: not linger_status.stat.exists
+  changed_when: true
+
+- name: Verify linger is enabled
+  ansible.builtin.stat:
+    path: "/var/lib/systemd/linger/{{ podman_quadlet_user }}"
+  register: linger_verify
+  become: true
+  failed_when: not linger_verify.stat.exists

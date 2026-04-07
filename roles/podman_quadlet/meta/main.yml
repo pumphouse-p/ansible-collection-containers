@@ -1,0 +1,29 @@
+---
+galaxy_info:
+  author: Devin
+  description: Manage Podman Quadlet files for containers, networks, and volumes
+  license: MIT
+  min_ansible_version: "2.9"
+  platforms:
+    - name: EL
+      versions:
+        - 8
+        - 9
+    - name: Fedora
+      versions:
+        - 38
+        - 39
+        - 40
+        - 41
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+  galaxy_tags:
+    - podman
+    - containers
+    - quadlet
+    - systemd
+
+dependencies: []

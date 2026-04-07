@@ -1,0 +1,8 @@
+---
+- name: Setup Podman Quadlet stuff
+  hosts: "{{ s_hosts | default('all') }}"
+  become: false
+  gather_facts: true
+
+  roles:
+    - role: podman_quadlet

@@ -1,0 +1,28 @@
+---
+# Scope: 'system' or 'user'
+podman_quadlet_scope: system
+
+# User to run quadlets under (only applies when scope is 'user')
+podman_quadlet_user: "{{ ansible_user_id }}"
+
+# Quadlet directory paths
+podman_quadlet_system_path: /etc/containers/systemd
+podman_quadlet_user_path: "{{ ansible_user_dir | default('~' + podman_quadlet_user) }}/.config/containers/systemd"
+
+# State: 'present' or 'absent'
+podman_quadlet_state: present
+
+# Whether to reload systemd daemon after changes
+podman_quadlet_reload_daemon: true
+
+# Whether to enable and start services
+podman_quadlet_enable_services: true
+podman_quadlet_start_services: true
+
+# Enable linger for user scope (allows user services to run when user is not logged in)
+podman_quadlet_enable_linger: true
+
+# Quadlet definitions
+podman_quadlet_containers: []
+podman_quadlet_networks: []
+podman_quadlet_volumes: []

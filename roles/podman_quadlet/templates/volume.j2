@@ -1,0 +1,49 @@
+# Ansible managed - {{ volume.name }}.volume
+{% if volume.unit is defined %}
+[Unit]
+{% if volume.unit.description is defined %}
+Description={{ volume.unit.description }}
+{% endif %}
+{% if volume.unit.after is defined %}
+After={{ volume.unit.after if volume.unit.after is string else volume.unit.after | join(' ') }}
+{% endif %}
+{% if volume.unit.requires is defined %}
+Requires={{ volume.unit.requires if volume.unit.requires is string else volume.unit.requires | join(' ') }}
+{% endif %}
+
+{% endif %}
+[Volume]
+{% if volume.volume_name is defined %}
+VolumeName={{ volume.volume_name }}
+{% endif %}
+{% if volume.user is defined %}
+User={{ volume.user }}
+{% endif %}
+{% if volume.group is defined %}
+Group={{ volume.group }}
+{% endif %}
+{% if volume.labels is defined %}
+{% for label_key, label_value in volume.labels.items() %}
+Label={{ label_key }}={{ label_value }}
+{% endfor %}
+{% endif %}
+{% if volume.options is defined %}
+{% for opt_key, opt_value in volume.options.items() %}
+Options={{ opt_key }}={{ opt_value }}
+{% endfor %}
+{% endif %}
+{% if volume.device is defined %}
+Device={{ volume.device }}
+{% endif %}
+{% if volume.type is defined %}
+Type={{ volume.type }}
+{% endif %}
+{% if volume.podman_args is defined %}
+PodmanArgs={{ volume.podman_args if volume.podman_args is string else volume.podman_args | join(' ') }}
+{% endif %}
+
+[Install]
+WantedBy={{ volume.install.wanted_by | default('multi-user.target' if podman_quadlet_scope == 'system' else 'default.target') }}
+{% if volume.install is defined and volume.install.required_by is defined %}
+RequiredBy={{ volume.install.required_by if volume.install.required_by is string else volume.install.required_by | join(' ') }}
+{% endif %}

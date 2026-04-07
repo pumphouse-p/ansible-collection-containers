@@ -1,0 +1,7 @@
+---
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: true
+    scope: "{{ podman_quadlet_systemd_scope }}"
+  become: "{{ podman_quadlet_scope == 'system' }}"
+  become_user: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, omit) }}"

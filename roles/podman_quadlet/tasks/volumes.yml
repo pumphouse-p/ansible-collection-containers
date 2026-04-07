@@ -1,0 +1,31 @@
+---
+- name: Deploy Podman volume quadlet file - {{ volume.name }}
+  ansible.builtin.template:
+    src: volume.j2
+    dest: "{{ podman_quadlet_dir }}/{{ volume.name }}.volume"
+    mode: "0644"
+    owner: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, 'root') }}"
+    group: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, 'root') }}"
+  become: "{{ podman_quadlet_scope == 'system' }}"
+  when: volume.state | default(podman_quadlet_state) == 'present'
+  notify: reload systemd
+
+- name: Remove Podman volume quadlet file - {{ volume.name }}
+  ansible.builtin.file:
+    path: "{{ podman_quadlet_dir }}/{{ volume.name }}.volume"
+    state: absent
+  become: "{{ podman_quadlet_scope == 'system' }}"
+  when: volume.state | default(podman_quadlet_state) == 'absent'
+  notify: reload systemd
+
+- name: Enable and start volume service - {{ volume.name }}
+  ansible.builtin.systemd:
+    name: "{{ volume.name }}-volume"
+    enabled: "{{ volume.enabled | default(podman_quadlet_enable_services) }}"
+    state: "{{ (volume.started | default(podman_quadlet_start_services)) | ternary('started', omit) }}"
+    scope: "{{ podman_quadlet_systemd_scope }}"
+  become: "{{ podman_quadlet_scope == 'system' }}"
+  become_user: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, omit) }}"
+  when:
+    - volume.state | default(podman_quadlet_state) == 'present'
+    - podman_quadlet_reload_daemon

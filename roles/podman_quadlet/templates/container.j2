@@ -1,0 +1,100 @@
+# Ansible managed - {{ container.name }}.container
+{% if container.unit is defined %}
+[Unit]
+{% if container.unit.description is defined %}
+Description={{ container.unit.description }}
+{% endif %}
+{% if container.unit.after is defined %}
+After={{ container.unit.after if container.unit.after is string else container.unit.after | join(' ') }}
+{% endif %}
+{% if container.unit.requires is defined %}
+Requires={{ container.unit.requires if container.unit.requires is string else container.unit.requires | join(' ') }}
+{% endif %}
+{% if container.unit.wants is defined %}
+Wants={{ container.unit.wants if container.unit.wants is string else container.unit.wants | join(' ') }}
+{% endif %}
+
+{% endif %}
+[Container]
+Image={{ container.image }}
+{% if container.container_name is defined %}
+ContainerName={{ container.container_name }}
+{% endif %}
+{% if container.exec is defined %}
+Exec={{ container.exec if container.exec is string else container.exec | join(' ') }}
+{% endif %}
+{% if container.environment is defined %}
+{% for env_key, env_value in container.environment.items() %}
+Environment={{ env_key }}={{ env_value }}
+{% endfor %}
+{% endif %}
+{% if container.environment_file is defined %}
+{% for env_file in ([container.environment_file] if container.environment_file is string else container.environment_file) %}
+EnvironmentFile={{ env_file }}
+{% endfor %}
+{% endif %}
+{% if container.network is defined %}
+{% for net in ([container.network] if container.network is string else container.network) %}
+Network={{ net }}
+{% endfor %}
+{% endif %}
+{% if container.publish_port is defined %}
+{% for port in ([container.publish_port] if container.publish_port is string else container.publish_port) %}
+PublishPort={{ port }}
+{% endfor %}
+{% endif %}
+{% if container.volume is defined %}
+{% for vol in ([container.volume] if container.volume is string else container.volume) %}
+Volume={{ vol }}
+{% endfor %}
+{% endif %}
+{% if container.user is defined %}
+User={{ container.user }}
+{% endif %}
+{% if container.group is defined %}
+Group={{ container.group }}
+{% endif %}
+{% if container.run_init is defined %}
+RunInit={{ container.run_init | bool | lower }}
+{% endif %}
+{% if container.pull is defined %}
+Pull={{ container.pull }}
+{% endif %}
+{% if container.auto_update is defined %}
+AutoUpdate={{ container.auto_update }}
+{% endif %}
+{% if container.podman_args is defined %}
+PodmanArgs={{ container.podman_args if container.podman_args is string else container.podman_args | join(' ') }}
+{% endif %}
+{% if container.labels is defined %}
+{% for label_key, label_value in container.labels.items() %}
+Label={{ label_key }}={{ label_value }}
+{% endfor %}
+{% endif %}
+{% if container.security_label_disable is defined %}
+SecurityLabelDisable={{ container.security_label_disable | bool | lower }}
+{% endif %}
+{% if container.timezone is defined %}
+Timezone={{ container.timezone }}
+{% endif %}
+
+{% if container.service is defined or container.install is defined %}
+[Service]
+{% if container.service is defined %}
+{% if container.service.restart is defined %}
+Restart={{ container.service.restart }}
+{% endif %}
+{% if container.service.timeout_start_sec is defined %}
+TimeoutStartSec={{ container.service.timeout_start_sec }}
+{% endif %}
+{% if container.service.timeout_stop_sec is defined %}
+TimeoutStopSec={{ container.service.timeout_stop_sec }}
+{% endif %}
+{% endif %}
+
+{% endif %}
+[Install]
+WantedBy={{ container.install.wanted_by | default('multi-user.target' if podman_quadlet_scope == 'system' else 'default.target') }}
+{% if container.install is defined and container.install.required_by is defined %}
+RequiredBy={{ container.install.required_by if container.install.required_by is string else container.install.required_by | join(' ') }}
+{% endif %}
