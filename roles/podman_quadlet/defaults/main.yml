@@ -7,7 +7,7 @@ podman_quadlet_user: "{{ ansible_user }}"
 
 # Quadlet directory paths
 podman_quadlet_system_path: /etc/containers/systemd
-podman_quadlet_user_path: "{{ ansible_user_dir | default('~' + podman_quadlet_user) }}/.config/containers/systemd"
+podman_quadlet_user_path: "~{{ podman_quadlet_user }}/.config/containers/systemd"
 
 # State: 'present' or 'absent'
 podman_quadlet_state: present

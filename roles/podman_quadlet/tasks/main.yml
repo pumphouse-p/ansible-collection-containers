@@ -1,8 +1,24 @@
 ---
+- name: Get home directory for user scope
+  ansible.builtin.getent:
+    database: passwd
+    key: "{{ podman_quadlet_user }}"
+  when: podman_quadlet_scope == 'user'
+
+- name: Set user home directory fact
+  ansible.builtin.set_fact:
+    podman_quadlet_user_home: "{{ getent_passwd[podman_quadlet_user][4] }}"
+  when: podman_quadlet_scope == 'user'
+
+- name: Set expanded user path
+  ansible.builtin.set_fact:
+    podman_quadlet_user_path_expanded: "{{ podman_quadlet_user_home }}/.config/containers/systemd"
+  when: podman_quadlet_scope == 'user'
+
 - name: Set quadlet directory based on scope
   ansible.builtin.set_fact:
-    podman_quadlet_dir: "{{ podman_quadlet_scope == 'system' | ternary(podman_quadlet_system_path, podman_quadlet_user_path) }}"
-    podman_quadlet_systemd_scope: "{{ podman_quadlet_scope == 'system' | ternary('system', 'user') }}"
+    podman_quadlet_dir: "{{ (podman_quadlet_scope == 'system') | ternary(podman_quadlet_system_path, podman_quadlet_user_path_expanded) }}"
+    podman_quadlet_systemd_scope: "{{ (podman_quadlet_scope == 'system') | ternary('system', 'user') }}"
 
 - name: Enable linger for user scope
   ansible.builtin.include_tasks:
@@ -16,8 +32,8 @@
     path: "{{ podman_quadlet_dir }}"
     state: directory
     mode: "0755"
-    owner: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, 'root') }}"
-    group: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, 'root') }}"
+    owner: "{{ (podman_quadlet_scope == 'user') | ternary(podman_quadlet_user, 'root') }}"
+    group: "{{ (podman_quadlet_scope == 'user') | ternary(podman_quadlet_user, 'root') }}"
   become: "{{ podman_quadlet_scope == 'system' }}"
 
 - name: Manage Podman quadlet networks
@@ -49,5 +65,5 @@
     daemon_reload: true
     scope: "{{ podman_quadlet_systemd_scope }}"
   become: "{{ podman_quadlet_scope == 'system' }}"
-  become_user: "{{ podman_quadlet_scope == 'user' | ternary(podman_quadlet_user, omit) }}"
+  become_user: "{{ (podman_quadlet_scope == 'user') | ternary(podman_quadlet_user, omit) }}"
   when: podman_quadlet_reload_daemon
