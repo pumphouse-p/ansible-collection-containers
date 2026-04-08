@@ -17,15 +17,3 @@
   become: "{{ podman_quadlet_scope == 'system' }}"
   when: network.state | default(podman_quadlet_state) == 'absent'
   notify: reload systemd
-
-- name: Enable and start network service - {{ network.name }}
-  ansible.builtin.systemd:
-    name: "{{ network.name }}-network"
-    enabled: "{{ network.enabled | default(podman_quadlet_enable_services) }}"
-    state: "{{ (network.started | default(podman_quadlet_start_services)) | ternary('started', omit) }}"
-    scope: "{{ podman_quadlet_systemd_scope }}"
-  become: "{{ podman_quadlet_scope == 'system' }}"
-  become_user: "{{ (podman_quadlet_scope == 'user') | ternary(podman_quadlet_user, omit) }}"
-  when:
-    - network.state | default(podman_quadlet_state) == 'present'
-    - podman_quadlet_reload_daemon

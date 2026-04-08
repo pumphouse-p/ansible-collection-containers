@@ -346,12 +346,14 @@ podman_quadlet_volumes:
 
 ## Service Names
 
-Systemd service names are generated from the quadlet filename:
-- Containers: `{name}.service`
-- Networks: `{name}-network.service`
-- Volumes: `{name}-volume.service`
+Only **containers** create systemd services. Networks and volumes are configuration files that are automatically created when referenced by a container.
 
-Manage services manually:
+Container service names are generated from the quadlet filename:
+- Containers: `{name}.service`
+- Networks: No service created (`.network` files are referenced by containers)
+- Volumes: No service created (`.volume` files are referenced by containers)
+
+Manage container services:
 ```bash
 # System-wide
 systemctl status nginx
@@ -360,6 +362,15 @@ systemctl restart nginx
 # User-scoped
 systemctl --user status personal-app
 systemctl --user restart personal-app
+```
+
+Check network/volume resources:
+```bash
+# Networks are created when a container starts
+podman network ls
+
+# Volumes are created when a container starts
+podman volume ls
 ```
 
 ## User Lingering
